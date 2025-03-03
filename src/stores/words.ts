@@ -20,6 +20,20 @@ export type WordType = {
 
 export const useWordsStore = defineStore('words', () => {
   const allWords = ref<WordType[]>([])
+  function importData(data: string) {
+    const newWords: WordType[] = JSON.parse(data)
+    const oldWords = allWords.value
+    let wordsToAdd: WordType[] = []
+
+    for (const w of newWords) {
+      if (oldWords.find((ow) => w.id === ow.id) === undefined) {
+        wordsToAdd = [...wordsToAdd, w]
+      }
+    }
+
+    allWords.value = [...allWords.value, ...wordsToAdd]
+    localStorage.setItem('words', JSON.stringify(allWords.value))
+  }
   const langs = useLanguagesStore()
   const currentWords = computed(() => {
     const currTarget = langs.languages[langs.selectedIndex]
@@ -121,5 +135,6 @@ export const useWordsStore = defineStore('words', () => {
     isLoading,
     handleSave,
     handleDelete,
+    importData,
   }
 })

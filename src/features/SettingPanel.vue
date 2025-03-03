@@ -3,6 +3,8 @@ import { useLanguagesStore } from '@/stores/languages'
 import { PhTrash, PhEyeClosed, PhEye } from '@phosphor-icons/vue'
 import { capitalize } from 'vue'
 import { useTokenStore } from '@/stores/token'
+import ImportData from '@/features/ImportData.vue'
+import ExportData from '@/features/ExportData.vue'
 
 const langs = useLanguagesStore()
 const token = useTokenStore()
@@ -38,6 +40,13 @@ const token = useTokenStore()
           <PhEyeClosed v-if="!token.show" :size="16" />
           <PhEye v-if="token.show" :size="16" />
         </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col gap-2">
+      <span>Sync data</span>
+      <div class="w-full flex items-center gap-2">
+        <ImportData />
+        <ExportData />
       </div>
     </div>
   </div>
