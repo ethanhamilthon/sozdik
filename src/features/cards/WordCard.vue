@@ -1,24 +1,40 @@
 <script setup lang="ts">
-import { PhPlus } from '@phosphor-icons/vue'
-const props = defineProps<{ title: string; body: string; isAddButton: boolean }>()
+import { useWordsStore, type WordType } from '@/stores/words'
+import ModalWindow from '../ModalWindow.vue'
+import { ref } from 'vue'
+
+import WordInfo from './WordInfo.vue'
+const { word } = defineProps<{ word: WordType }>()
+const isOpen = ref(false)
+const words = useWordsStore()
 </script>
 
 <template>
   <div
+    @click="isOpen = !isOpen"
     :class="[
-      'min-w-96 flex-1 h-36 border border-neutral-300 rounded-xl p-3 cursor-pointer hover:bg-neutral-100 transition max-w-[500px]',
-      {
-        'flex items-center justify-center gap-3': props.isAddButton,
-      },
+      'w-full border border-neutral-300 rounded-lg p-3 cursor-pointer hover:bg-neutral-100 transition',
     ]"
   >
-    <span class="text-xl font-bold text-neutral-800" v-if="!props.isAddButton">{{
-      props.title
-    }}</span>
-    <p class="text-sm font-light text-neutral-500" v-if="!props.isAddButton">{{ props.body }}</p>
-    <PhPlus :size="18" weight="bold" v-if="props.isAddButton" />
-    <span v-if="props.isAddButton" class="text-neutral-800">Add a word</span>
+    <span class="text-xl font-bold text-neutral-800 flex items-center gap-3"
+      ><span>{{ word.in_target }}</span>
+      <span class="text-xs font-light text-neutral-400">{{ word.in_user }}</span></span
+    >
   </div>
+  <ModalWindow :title="word.in_target" :is-open="isOpen" @toggle="isOpen = !isOpen">
+    <WordInfo :word="word" />
+    <div class="w-full flex items-center justify-end">
+      <button
+        @click="
+          () => {
+            words.handleDelete(word.id)
+            isOpen = false
+          }
+        "
+        class="px-4 py-2 bg-red-700 text-white rounded-md"
+      >
+        Delete
+      </button>
+    </div>
+  </ModalWindow>
 </template>
-
-<style scoped></style>
