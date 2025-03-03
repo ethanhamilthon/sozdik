@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useLanguagesStore } from '@/stores/languages'
 import { PhTrash, PhEyeClosed, PhEye } from '@phosphor-icons/vue'
-import { ref } from 'vue'
 import { capitalize } from 'vue'
 import { useTokenStore } from '@/stores/token'
 
@@ -34,7 +33,7 @@ const token = useTokenStore()
         />
         <div
           @click="token.toggleShow"
-          class="absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+          class="absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer bg-white p-2 rounded-lg shadow-xl"
         >
           <PhEyeClosed v-if="!token.show" :size="16" />
           <PhEye v-if="token.show" :size="16" />
