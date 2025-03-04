@@ -18,8 +18,11 @@ export type WordType = {
   createdAt: Date
 }
 
+export type SubType = () => void
+
 export const useWordsStore = defineStore('words', () => {
   const allWords = ref<WordType[]>([])
+  const subs = ref<SubType[]>([])
   function importData(data: string) {
     const newWords: WordType[] = JSON.parse(data)
     const oldWords = allWords.value
@@ -112,6 +115,16 @@ export const useWordsStore = defineStore('words', () => {
     })
   }
 
+  function triggerSubs() {
+    for (const s of subs.value) {
+      s()
+    }
+  }
+
+  function addSub(s: SubType) {
+    subs.value = [...subs.value, s]
+  }
+
   function handleSave() {
     if (newWord.value !== null) {
       allWords.value = [newWord.value, ...allWords.value]
@@ -119,13 +132,22 @@ export const useWordsStore = defineStore('words', () => {
       newWord.value = null
       inputToWord.value = ''
     }
+    triggerSubs()
   }
 
   function handleDelete(id: string) {
     allWords.value = allWords.value.filter((w) => w.id !== id)
     localStorage.setItem('words', JSON.stringify(allWords.value))
+    triggerSubs()
+  }
+
+  function setAllWords(words: WordType[]) {
+    allWords.value = words
+    triggerSubs()
   }
   return {
+    addSub,
+    setAllWords,
     allWords,
     currentWords,
     addNewWord,
