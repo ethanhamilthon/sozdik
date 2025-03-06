@@ -6,6 +6,9 @@ const words = useWordsStore()
 
 <template>
   <div class="w-full flex items-center justify-between">
-    <span>{{ words.currentWords.length }} words</span><AddWord />
+    <span v-if="words.currentWords.length !== 0"
+      >{{ words.currentWords.length }} words</span
+    ><span v-else>No words yet</span>
+    <AddWord />
   </div>
 </template>

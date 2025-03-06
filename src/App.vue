@@ -5,5 +5,8 @@ import SyncLayout from '@/features/sync/SyncLayout.vue'
 </script>
 
 <template>
-  <SyncLayout><HeaderLayout /> <CardsList /></SyncLayout>
+  <SyncLayout>
+    <HeaderLayout />
+    <CardsList />
+  </SyncLayout>
 </template>
