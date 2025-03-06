@@ -12,7 +12,9 @@ const renderedHTML = computed(() => {
 })
 function sound() {
   const utterance = new SpeechSynthesisUtterance(props.word.in_target)
-  utterance.lang = languageCodes.find((c) => c.language === props.word.target_lang)?.code || 'en-US'
+  utterance.lang =
+    languageCodes.find((c) => c.language === props.word.target_lang)?.code ||
+    'en-US'
   window.speechSynthesis.speak(utterance)
 }
 </script>
@@ -34,5 +36,12 @@ function sound() {
       ><PhSpeakerSimpleHigh :size="16" />{{ props.word.transcription }}</span
     >
   </div>
-  <p class="text-neutral-500" v-html="renderedHTML"></p>
+  <p class="text-neutral-500 desc-height" v-html="renderedHTML"></p>
 </template>
+
+<style>
+.desc-height {
+  max-height: 50dvh;
+  overflow-y: scroll;
+}
+</style>

@@ -15,7 +15,11 @@ export const WordSchema = z.object({
 
 export const useGenerateWord = () => {
   const token = useTokenStore()
-  const getWordInfo = async (word: string, target: Language, user: Language) => {
+  const getWordInfo = async (
+    word: string,
+    target: Language,
+    user: Language,
+  ) => {
     const openai = new OpenAI({
       dangerouslyAllowBrowser: true,
       apiKey: token.token,

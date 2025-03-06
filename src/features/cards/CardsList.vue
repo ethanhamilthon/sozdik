@@ -101,7 +101,7 @@ const isAllDone = computed(() => {
         </span>
       </div>
     </div>
-    <div v-if="isAllDone">
+    <div v-if="isAllDone" class="w-full flex flex-col gap-2">
       <WordCard
         v-for="(w, index) in words.currentWords"
         :word="w"
